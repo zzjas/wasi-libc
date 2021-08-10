@@ -1625,9 +1625,10 @@ unsigned char _BitScanReverse(unsigned long *index, unsigned long mask);
 /* True if address a has acceptable alignment */
 #define is_aligned(A)       (((size_t)((A)) & (CHUNK_ALIGN_MASK)) == 0)
 
+#define ptr_to_size_t(A) ((sizeof(A)) > (sizeof(size_t)) ? ((size_t) 0):((size_t) A))
 /* the number of bytes to offset an address to align it */
 #define align_offset(A)\
- ((((size_t)(A) & CHUNK_ALIGN_MASK) == 0)? 0 :\
+ (((ptr_to_size_t(A) & CHUNK_ALIGN_MASK) == 0)? 0 :\
   ((MALLOC_ALIGNMENT - ((size_t)(A) & CHUNK_ALIGN_MASK)) & CHUNK_ALIGN_MASK))
 
 /* -------------------------- MMAP preliminaries ------------------------- */
